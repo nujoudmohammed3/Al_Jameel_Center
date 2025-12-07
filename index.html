@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز الجميل للخدمات الطلابية</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (CDN for immediate usage as requested) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        'neon-purple': '#b026ff',
+                        'neon-cyan': '#00f3ff',
+                        'deep-space': '#0f0c29',
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(176, 38, 255, 0.6)',
+                        'glow-cyan': '0 0 20px rgba(0, 243, 255, 0.6)',
+                        'card': '0 8px 32px 0 rgba(31, 38, 135, 0.37)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism utility */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(176, 38, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-neon-purple selection:text-white">
+    <!-- 3D Background Container -->
+    <div id="canvas-container"
+        class="fixed top-0 left-0 w-full h-full -z-10 opacity-60 pointer-events-none mix-blend-screen"></div>
+
+    <!-- Header -->
+    <header class="fixed w-full top-0 z-50 glass shadow-lg transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="logo relative group">
+                <img src="logo.png" alt="شعار مركز الجميل"
+                    class="h-12 drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-transform transform group-hover:scale-110">
+                <div
+                    class="absolute -inset-1 bg-gradient-to-r from-neon-purple to-neon-cyan rounded-full blur opacity-0 group-hover:opacity-75 transition duration-500">
+                </div>
+            </div>
+
+            <nav class="hidden md:flex gap-8">
+                <a href="#hero"
+                    class="text-white hover:text-neon-cyan font-bold transition-colors text-lg hover:shadow-glow-cyan bg-clip-text">الرئيسية</a>
+                <a href="#about"
+                    class="text-white hover:text-neon-cyan font-bold transition-colors text-lg hover:shadow-glow-cyan">من
+                    نحن</a>
+                <a href="#vision"
+                    class="text-white hover:text-neon-cyan font-bold transition-colors text-lg hover:shadow-glow-cyan">رؤيتنا</a>
+                <a href="#services"
+                    class="text-white hover:text-neon-cyan font-bold transition-colors text-lg hover:shadow-glow-cyan">خدماتنا</a>
+                <a href="#why-us"
+                    class="text-white hover:text-neon-cyan font-bold transition-colors text-lg hover:shadow-glow-cyan">لماذا
+                    نحن</a>
+                <a href="#contact"
+                    class="text-white hover:text-neon-cyan font-bold transition-colors text-lg hover:shadow-glow-cyan">تواصل
+                    معنا</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-white focus:outline-none burger">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Nav -->
+        <div class="nav-links absolute top-full left-0 w-full glass hidden flex-col items-center py-4 md:hidden">
+            <a href="#hero" class="py-2 text-white hover:text-neon-cyan font-bold">الرئيسية</a>
+            <a href="#about" class="py-2 text-white hover:text-neon-cyan font-bold">من نحن</a>
+            <a href="#vision" class="py-2 text-white hover:text-neon-cyan font-bold">رؤيتنا</a>
+            <a href="#services" class="py-2 text-white hover:text-neon-cyan font-bold">خدماتنا</a>
+            <a href="#why-us" class="py-2 text-white hover:text-neon-cyan font-bold">لماذا نحن</a>
+            <a href="#contact" class="py-2 text-white hover:text-neon-cyan font-bold">تواصل معنا</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="h-screen flex items-center justify-center text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-deep-space/80"></div>
+        <div class="relative z-10 px-4">
+            <h1
+                class="text-5xl md:text-7xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-white to-neon-purple drop-shadow-[0_0_15px_rgba(0,243,255,0.5)] animate-pulse">
+                مركز الجميل
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed">
+                شريكك الأمثل للنجاح الأكاديمي والتميز في عالم رقمي متسارع
+            </p>
+            <a href="#services"
+                class="inline-block px-10 py-4 rounded-full bg-gradient-to-r from-neon-purple to-neon-cyan text-white font-bold text-lg shadow-glow hover:shadow-[0_0_40px_rgba(0,243,255,0.8)] transform hover:scale-105 transition-all duration-300 border border-white/20">
+                اكتشف خدماتنا
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative group hover:bg-white/5 transition-colors duration-500">
+        <div
+            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neon-purple/20 to-transparent pointer-events-none">
+        </div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl font-bold mb-12 text-neon-cyan text-glow">من نحن</h2>
+            <div
+                class="glass p-10 rounded-3xl max-w-4xl mx-auto shadow-card hover:shadow-glow-cyan transition-all duration-300 transform hover:-translate-y-2">
+                <p class="text-xl leading-loose text-gray-100">
+                    مركز الجميل هو وجهتك الأولى للخدمات الطلابية المتميزة. نسعى لتوفير بيئة داعمة للطلاب في مختلف
+                    المراحل الدراسية، من خلال تقديم حلول أكاديمية مبتكرة ومساعدات متخصصة تضمن لك التفوق.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section id="vision" class="py-20 relative group hover:bg-white/5 transition-colors duration-500">
+        <div
+            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neon-cyan/20 to-transparent pointer-events-none">
+        </div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl font-bold mb-12 text-neon-purple text-glow">رؤيتنا</h2>
+            <div
+                class="glass p-10 rounded-3xl max-w-4xl mx-auto shadow-card hover:shadow-glow transition-all duration-300 transform hover:-translate-y-2 border-neon-purple/30 border">
+                <p class="text-xl leading-loose text-gray-100">
+                    نسعى لأن نكون المركز الرائد في تقديم الخدمات الطلابية على مستوى المنطقة، من خلال توفير بيئة تعليمية
+                    محفزة وداعمة تمكن الطلاب من تحقيق طموحاتهم وأهدافهم الأكاديمية.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 relative px-4">
+        <div class="absolute inset-0 bg-gradient-to-t from-deep-space via-transparent to-deep-space -z-10"></div>
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-16 text-center text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
+                خدماتنا المميزة</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Cards -->
+                <div
+                    class="glass p-8 rounded-2xl text-center group hover:bg-neon-purple/20 transition-all duration-300 border border-white/10 hover:border-neon-purple hover:shadow-[0_0_30px_rgba(176,38,255,0.4)]">
+                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300 drop-shadow-md">📝
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-neon-cyan group-hover:text-white transition-colors">
+                        الأسايمنت</h3>
+                    <p class="text-gray-300">حل وإعداد الأسايمنتات الجامعية بجودة عالية وشرح للنقاط المهمة.</p>
+                </div>
+
+                <div
+                    class="glass p-8 rounded-2xl text-center group hover:bg-neon-cyan/20 transition-all duration-300 border border-white/10 hover:border-neon-cyan hover:shadow-[0_0_30px_rgba(0,243,255,0.4)]">
+                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300 drop-shadow-md">💼
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-neon-purple group-hover:text-white transition-colors">
+                        المشاريع</h3>
+                    <p class="text-gray-300">تنفيذ مشاريع جامعية احترافية مع توثيق كامل وتوضيح آلية العمل.</p>
+                </div>
+
+                <div
+                    class="glass p-8 rounded-2xl text-center group hover:bg-neon-purple/20 transition-all duration-300 border border-white/10 hover:border-neon-purple hover:shadow-[0_0_30px_rgba(176,38,255,0.4)]">
+                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300 drop-shadow-md">📚
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-neon-cyan group-hover:text-white transition-colors">البحوث
+                    </h3>
+                    <p class="text-gray-300">إعداد وتنسيق الأبحاث العلمية وفق المعايير الأكاديمية المطلوبة.</p>
+                </div>
+
+                <div
+                    class="glass p-8 rounded-2xl text-center group hover:bg-neon-cyan/20 transition-all duration-300 border border-white/10 hover:border-neon-cyan hover:shadow-[0_0_30px_rgba(0,243,255,0.4)]">
+                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300 drop-shadow-md">💻
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-neon-purple group-hover:text-white transition-colors">
+                        البرمجة</h3>
+                    <p class="text-gray-300">تنفيذ وحل الأكواد البرمجية وشرح مفاهيم البرمجة بطريقة مبسطة.</p>
+                </div>
+
+                <div
+                    class="glass p-8 rounded-2xl text-center group hover:bg-neon-purple/20 transition-all duration-300 border border-white/10 hover:border-neon-purple hover:shadow-[0_0_30px_rgba(176,38,255,0.4)]">
+                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300 drop-shadow-md">🎤
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-neon-cyan group-hover:text-white transition-colors">
+                        البرزنتيشن</h3>
+                    <p class="text-gray-300">تصميم عروض تقديمية جذابة واحترافية باستخدام PowerPoint أو Canva.</p>
+                </div>
+
+                <div
+                    class="glass p-8 rounded-2xl text-center group hover:bg-neon-cyan/20 transition-all duration-300 border border-white/10 hover:border-neon-cyan hover:shadow-[0_0_30px_rgba(0,243,255,0.4)]">
+                    <div class="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300 drop-shadow-md">📊
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-neon-purple group-hover:text-white transition-colors">
+                        التحليل الإحصائي</h3>
+                    <p class="text-gray-300">تحليل البيانات باستخدام SPSS وExcel مع تفسير النتائج بشكل مبسط.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section (Simplified for brevity but maintaining style) -->
+    <section id="why-us" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-12 text-center text-neon-purple text-glow">لماذا نحن</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="glass p-6 rounded-2xl hover:bg-white/10 transition-all shadow-glow hover:scale-105">
+                    <span class="text-4xl block mb-2">🚀</span>
+                    <h4 class="font-bold text-neon-cyan">سرعة الإنجاز</h4>
+                </div>
+                <div class="glass p-6 rounded-2xl hover:bg-white/10 transition-all shadow-glow hover:scale-105">
+                    <span class="text-4xl block mb-2">⭐</span>
+                    <h4 class="font-bold text-neon-cyan">جودة عالية</h4>
+                </div>
+                <div class="glass p-6 rounded-2xl hover:bg-white/10 transition-all shadow-glow hover:scale-105">
+                    <span class="text-4xl block mb-2">💰</span>
+                    <h4 class="font-bold text-neon-cyan">أسعار منافسة</h4>
+                </div>
+                <div class="glass p-6 rounded-2xl hover:bg-white/10 transition-all shadow-glow hover:scale-105">
+                    <span class="text-4xl block mb-2">🔒</span>
+                    <h4 class="font-bold text-neon-cyan">سرية تامة</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-12 text-center text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
+                تواصل معنا</h2>
+            <div class="flex justify-center">
+                <div
+                    class="glass p-10 rounded-3xl text-center w-full max-w-lg shadow-[0_0_50px_rgba(37,211,102,0.2)] hover:shadow-[0_0_50px_rgba(37,211,102,0.5)] transition-all duration-500 border border-green-500/30">
+                    <div class="mb-6 inline-block p-4 rounded-full bg-green-500/20 shadow-inner">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="#25D366"
+                            xmlns="http://www.w3.org/2000/svg" class="animate-bounce">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471.148-.67.445-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4 text-white">تواصل معنا عبر الواتساب</h3>
+                    <p class="text-gray-300 mb-8 text-lg">نسعد بخدمتكم والرد على استفساراتكم مباشرة</p>
+                    <a href="https://wa.me/+9667230589054" target="_blank"
+                        class="inline-flex items-center gap-3 bg-[#25D366] hover:bg-green-500 text-white font-bold py-4 px-8 rounded-full text-xl shadow-lg hover:shadow-green-500/50 transition-all transform hover:scale-105">
+                        <span>اضغط للمراسلة</span>
+                        <span dir="ltr">7230589054</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black/80 text-white py-8 border-t border-white/10 glass">
+        <div class="container mx-auto text-center">
+            <p class="opacity-70">جميع الحقوق محفوظة &copy; 2026 مركز الجميل للخدمات الطلابية</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        // Simple JS for mobile menu since we removed the original logic in main.js might rely on old classes
+        // Re-implementing basic toggle here to ensure it works with new Tailwind classes
+        document.querySelector('.burger').addEventListener('click', () => {
+            const nav = document.querySelector('.nav-links');
+            nav.classList.toggle('hidden');
+            nav.classList.toggle('flex');
+        });
+    </script>
+</body>
+
+</html>
